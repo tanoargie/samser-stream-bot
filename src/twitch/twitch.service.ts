@@ -39,7 +39,7 @@ export class TwitchService {
   async subscribeToStreamOnline(userId: string) {
     await this.listener.subscribeToStreamOnlineEvents(userId, async () => {
       await this.discordService.sendWebhookMessage(
-        'El tano está en vivo en Twitch.',
+        'https://www.twitch.tv/tanoserio',
       );
       await this.twitterService.sendTweet(
         'El tano está en vivo en Twitch. https://www.twitch.tv/tanoserio',
