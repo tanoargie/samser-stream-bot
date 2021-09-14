@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ClientCredentialsAuthProvider } from '@twurple/auth';
 import { ApiClient } from '@twurple/api';
-import { EventSubListener, DirectConnectionAdapter } from '@twurple/eventsub';
+import { EventSubListener, ReverseProxyAdapter } from '@twurple/eventsub';
 import { TwitterService } from '../twitter/twitter.service';
 import { DiscordService } from '../discord/discord.service';
 
@@ -21,12 +21,8 @@ export class TwitchService {
       clientId,
       clientSecret,
     );
-    const adapter = new DirectConnectionAdapter({
+    const adapter = new ReverseProxyAdapter({
       hostName: 'samser.co',
-      sslCert: {
-        key: process.env.SSL_KEY_LOCATION,
-        cert: process.env.SSL_CERT_LOCATION,
-      },
     });
     const apiClient = new ApiClient({ authProvider });
     const listener = new EventSubListener({
