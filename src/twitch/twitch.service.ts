@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ClientCredentialsAuthProvider } from '@twurple/auth';
 import { ApiClient } from '@twurple/api';
-import { EventSubListener } from '@twurple/eventsub';
-import { NgrokAdapter } from '@twurple/eventsub-ngrok';
+import { EventSubListener, DirectConnectionAdapter } from '@twurple/eventsub';
 import { TwitterService } from '../twitter/twitter.service';
 import { DiscordService } from '../discord/discord.service';
 
@@ -22,10 +21,17 @@ export class TwitchService {
       clientId,
       clientSecret,
     );
+    const adapter = new DirectConnectionAdapter({
+      hostName: 'samser.co',
+      sslCert: {
+        key: process.env.SSL_KEY_LOCATION,
+        cert: process.env.SSL_CERT_LOCATION,
+      },
+    });
     const apiClient = new ApiClient({ authProvider });
     const listener = new EventSubListener({
       apiClient,
-      adapter: new NgrokAdapter(),
+      adapter,
       secret,
     });
 
