@@ -22,7 +22,7 @@ export class TwitchService {
       clientSecret,
     );
     const adapter = new ReverseProxyAdapter({
-      hostName: 'samser.co',
+      hostName: 'bot.samser.co',
     });
     const apiClient = new ApiClient({ authProvider });
     const listener = new EventSubListener({

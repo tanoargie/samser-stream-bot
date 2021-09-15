@@ -18,7 +18,7 @@ export class TwitchController {
   async subscribeToStreamOnline(@Body() body: { id: string }) {
     if (!this.initialized) {
       await this.initService();
-      await this.twitchService.subscribeToStreamOnline(body.id);
     }
+    await this.twitchService.subscribeToStreamOnline(body.id);
   }
 }
