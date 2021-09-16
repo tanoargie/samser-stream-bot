@@ -43,7 +43,7 @@ export class TwitchService {
   }
 
   async subscribeToOnlineStream(userId: string) {
-    await this.listener.subscribeToUserUpdateEvents(userId, async () => {
+    await this.listener.subscribeToStreamOnlineEvents(userId, async () => {
       await this.discordService.sendWebhookMessage(
         'https://www.twitch.tv/tanoserio',
       );
