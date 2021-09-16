@@ -24,7 +24,8 @@ export class TwitchService {
       clientSecret,
     );
     const adapter = new ReverseProxyAdapter({
-      hostName: 'bot.samser.co',
+      hostName: 'botcallback.samser.co',
+      port: 3001,
     });
     // const adapter = new NgrokAdapter();
     const apiClient = new ApiClient({ authProvider });
