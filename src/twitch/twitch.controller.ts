@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, Delete, Param } from '@nestjs/common';
 import { TwitchService } from './twitch.service';
 
 @Controller('twitch')
@@ -15,10 +15,26 @@ export class TwitchController {
   }
 
   @Post('subscribeToOnlineStream')
-  async subscribeToStreamOnline(@Body() body: { id: string }) {
+  async subscribeToOnlineStream(@Body() body: { id: string }) {
     if (!this.initialized) {
       await this.initService();
     }
-    await this.twitchService.subscribeToStreamOnline(body.id);
+    await this.twitchService.subscribeToOnlineStream(body.id);
+  }
+
+  @Delete('subscriptions/:id')
+  async unsubscribe(@Param() params: { id: string }) {
+    await this.twitchService.unsubscribe(params.id);
+  }
+
+  @Get('subscriptions')
+  async getAllSubscriptions() {
+    const subscriptions = await this.twitchService.getAllSubscriptions();
+    return subscriptions.data.map((sub) => sub.id);
+  }
+
+  @Delete('subscriptions')
+  async unsubscribeAll() {
+    return this.twitchService.unsubscribeAll();
   }
 }

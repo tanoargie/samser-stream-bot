@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { ClientCredentialsAuthProvider } from '@twurple/auth';
 import { ApiClient } from '@twurple/api';
 import { EventSubListener, ReverseProxyAdapter } from '@twurple/eventsub';
+// import { NgrokAdapter } from '@twurple/eventsub-ngrok';
 import { TwitterService } from '../twitter/twitter.service';
 import { DiscordService } from '../discord/discord.service';
 
 @Injectable()
 export class TwitchService {
   private listener: EventSubListener;
+  private apiClient: ApiClient;
 
   constructor(
     private discordService: DiscordService,
@@ -24,6 +26,7 @@ export class TwitchService {
     const adapter = new ReverseProxyAdapter({
       hostName: 'bot.samser.co',
     });
+    // const adapter = new NgrokAdapter();
     const apiClient = new ApiClient({ authProvider });
     const listener = new EventSubListener({
       apiClient,
@@ -31,6 +34,7 @@ export class TwitchService {
       secret,
     });
 
+    this.apiClient = apiClient;
     this.listener = listener;
   }
 
@@ -38,8 +42,8 @@ export class TwitchService {
     await this.listener.listen();
   }
 
-  async subscribeToStreamOnline(userId: string) {
-    await this.listener.subscribeToStreamOnlineEvents(userId, async () => {
+  async subscribeToOnlineStream(userId: string) {
+    await this.listener.subscribeToUserUpdateEvents(userId, async () => {
       await this.discordService.sendWebhookMessage(
         'https://www.twitch.tv/tanoserio',
       );
@@ -47,5 +51,17 @@ export class TwitchService {
         'El tano está en vivo en Twitch. https://www.twitch.tv/tanoserio',
       );
     });
+  }
+
+  async unsubscribe(subscriptionId: string) {
+    await this.apiClient.eventSub.deleteSubscription(subscriptionId);
+  }
+
+  async getAllSubscriptions() {
+    return this.apiClient.eventSub.getSubscriptions();
+  }
+
+  async unsubscribeAll() {
+    await this.apiClient.eventSub.deleteAllSubscriptions();
   }
 }
