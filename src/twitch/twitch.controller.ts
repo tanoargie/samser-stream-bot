@@ -15,12 +15,12 @@ export class TwitchController {
 
   @Post('subscribeToOnlineStream')
   async subscribeToOnlineStream(@Body() body: { id: string }) {
-    await this.twitchService.subscribeToOnlineStream(body.id);
+    return this.twitchService.subscribeToOnlineStream(body.id);
   }
 
   @Delete('subscriptions/:id')
   async unsubscribe(@Param() params: { id: string }) {
-    await this.twitchService.unsubscribe(params.id);
+    return this.twitchService.unsubscribe(params.id);
   }
 
   @Get('subscriptions')

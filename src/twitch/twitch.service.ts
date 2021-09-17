@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ClientCredentialsAuthProvider } from '@twurple/auth';
 import { ApiClient } from '@twurple/api';
 import { EventSubListener, ReverseProxyAdapter } from '@twurple/eventsub';
-// import { NgrokAdapter } from '@twurple/eventsub-ngrok';
+import { NgrokAdapter } from '@twurple/eventsub-ngrok';
 import { TwitterService } from '../twitter/twitter.service';
 import { DiscordService } from '../discord/discord.service';
 
@@ -44,7 +44,7 @@ export class TwitchService {
   }
 
   async subscribeToOnlineStream(userId: string) {
-    await this.listener.subscribeToStreamOnlineEvents(userId, async () => {
+    return this.listener.subscribeToStreamOnlineEvents(userId, async () => {
       await this.discordService.sendWebhookMessage(
         'https://www.twitch.tv/tanoserio',
       );
@@ -55,7 +55,7 @@ export class TwitchService {
   }
 
   async unsubscribe(subscriptionId: string) {
-    await this.apiClient.eventSub.deleteSubscription(subscriptionId);
+    return this.apiClient.eventSub.deleteSubscription(subscriptionId);
   }
 
   async getAllSubscriptions() {
