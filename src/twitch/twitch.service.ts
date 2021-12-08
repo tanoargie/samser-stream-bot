@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ClientCredentialsAuthProvider } from '@twurple/auth';
 import { ApiClient } from '@twurple/api';
 import { EventSubListener, ReverseProxyAdapter } from '@twurple/eventsub';
-import { NgrokAdapter } from '@twurple/eventsub-ngrok';
 import { TwitterService } from '../twitter/twitter.service';
 import { DiscordService } from '../discord/discord.service';
 
