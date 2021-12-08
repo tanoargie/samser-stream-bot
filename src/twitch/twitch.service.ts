@@ -4,6 +4,7 @@ import { ApiClient } from '@twurple/api';
 import { EventSubListener, ReverseProxyAdapter } from '@twurple/eventsub';
 import { TwitterService } from '../twitter/twitter.service';
 import { DiscordService } from '../discord/discord.service';
+import { MessageEmbed } from 'discord.js';
 
 @Injectable()
 export class TwitchService {
@@ -44,8 +45,10 @@ export class TwitchService {
 
   async subscribeToOnlineStream(userId: string) {
     return this.listener.subscribeToStreamOnlineEvents(userId, async () => {
+      const embed = new MessageEmbed().setTitle('En vivo!').setColor('#0099ff');
       await this.discordService.sendWebhookMessage(
         'https://www.twitch.tv/tanoserio',
+        [embed],
       );
       await this.twitterService.sendTweet(
         'El tano está en vivo en Twitch. https://www.twitch.tv/tanoserio',
