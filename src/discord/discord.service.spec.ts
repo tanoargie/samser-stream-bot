@@ -1,10 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DiscordService } from './discord.service';
-import { WebhookClient, MessageEmbed } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 
 describe('DiscordService', () => {
   let service: DiscordService;
-  let webhookClient: WebhookClient;
   const mockSend = jest.fn();
 
   beforeEach(async () => {
@@ -19,7 +18,6 @@ describe('DiscordService', () => {
     }).compile();
 
     service = module.get<DiscordService>(DiscordService);
-    webhookClient = module.get<WebhookClient>('WEBHOOK_CLIENT');
   });
 
   it('should be defined', () => {
@@ -32,13 +30,7 @@ describe('DiscordService', () => {
       const embeds = [
         new MessageEmbed().setTitle('En vivo!').setColor('#0099ff'),
       ];
-
-      await webhookClient.send({
-        content,
-        username: 'tano#5049',
-        avatarURL: process.env.DISCORD_BOT_IMAGE,
-        embeds,
-      });
+      await service.sendWebhookMessage(content, embeds);
 
       expect(mockSend).toHaveBeenCalledWith({
         content,
