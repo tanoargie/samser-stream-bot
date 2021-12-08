@@ -17,8 +17,7 @@ export class DiscordService {
     return this.announcementsWebhook.send({
       content: message,
       username: 'tano#5049',
-      avatarURL:
-        'https://pbs.twimg.com/profile_images/451684300581138432/E6OgAl1f.jpeg',
+      avatarURL: process.env.DISCORD_BOT_IMAGE,
       embeds: [embed],
     });
   }
