@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
-import webhookClient from './discord.client';
 import { DiscordService } from './discord.service';
+import { ConfigModule } from '@nestjs/config';
+import DiscordFactory from './discord.factory';
 
 @Module({
-  providers: [
-    DiscordService,
-    {
-      provide: 'WEBHOOK_CLIENT',
-      useValue: webhookClient,
-    },
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: '../../.env',
+    }),
   ],
+  providers: [DiscordService, DiscordFactory],
   exports: [DiscordService],
 })
 export class DiscordModule {}

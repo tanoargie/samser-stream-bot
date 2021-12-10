@@ -1,15 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TwitterService } from './twitter.service';
-import twitterClient from './twitter.client';
+import TwitterFactory from './twitter.factory';
 
 @Module({
-  providers: [
-    TwitterService,
-    {
-      provide: 'TWITTER_CLIENT',
-      useValue: twitterClient,
-    },
-  ],
+  providers: [TwitterService, TwitterFactory],
   exports: [TwitterService],
 })
 export class TwitterModule {}
