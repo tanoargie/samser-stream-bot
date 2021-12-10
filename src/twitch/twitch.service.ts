@@ -1,12 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { ClientCredentialsAuthProvider } from '@twurple/auth';
 import { ApiClient } from '@twurple/api';
-import { EventSubListener, ReverseProxyAdapter } from '@twurple/eventsub';
+import { EventSubListener } from '@twurple/eventsub';
 import { TwitterService } from '../twitter/twitter.service';
 import { DiscordService } from '../discord/discord.service';
 import { MessageEmbed } from 'discord.js';
+import TwitchListener from './twitch.listener';
+import TwitchClient from './twitch.client';
 
-@Injectable()
 export class TwitchService {
   private listener: EventSubListener;
   private apiClient: ApiClient;
@@ -15,25 +14,8 @@ export class TwitchService {
     private discordService: DiscordService,
     private twitterService: TwitterService,
   ) {
-    const clientId = process.env.TWITCH_CLIENT_ID;
-    const clientSecret = process.env.TWITCH_CLIENT_SECRET;
-    const secret = process.env.EVENT_SUB_SECRET;
-
-    const authProvider = new ClientCredentialsAuthProvider(
-      clientId,
-      clientSecret,
-    );
-    const adapter = new ReverseProxyAdapter({
-      hostName: 'botcallback.samser.co',
-      port: 3001,
-    });
-    // const adapter = new NgrokAdapter();
-    const apiClient = new ApiClient({ authProvider });
-    const listener = new EventSubListener({
-      apiClient,
-      adapter,
-      secret,
-    });
+    const apiClient = TwitchClient();
+    const listener = TwitchListener(apiClient);
 
     this.apiClient = apiClient;
     this.listener = listener;
