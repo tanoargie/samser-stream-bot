@@ -5,7 +5,7 @@ const listener = (apiClient: ApiClient) => {
   const secret = process.env.EVENT_SUB_SECRET;
 
   const adapter = new ReverseProxyAdapter({
-    hostName: 'botcallback.samser.co',
+    hostName: process.env.TWITCH_CALLBACK_HOSTNAME,
     port: 3001,
   });
 
