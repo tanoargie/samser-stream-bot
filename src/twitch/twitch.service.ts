@@ -25,16 +25,16 @@ export class TwitchService {
     await this.listener.listen();
   }
 
-  async subscribeToOnlineStream(userId: string) {
+  async subscribeToOnlineStream(
+    userId: string,
+    embedDiscordMessage: string,
+    discordMessage: string,
+    tweetMessage: string,
+  ) {
     return this.listener.subscribeToStreamOnlineEvents(userId, async () => {
-      const embed = new MessageEmbed().setTitle('En vivo!').setColor('#0099ff');
-      await this.discordService.sendWebhookMessage(
-        'https://www.twitch.tv/tanoserio',
-        [embed],
-      );
-      await this.twitterService.sendTweet(
-        'El tano está en vivo en Twitch. https://www.twitch.tv/tanoserio',
-      );
+      const embed = new MessageEmbed().setTitle(embedDiscordMessage);
+      await this.discordService.sendWebhookMessage(discordMessage, [embed]);
+      await this.twitterService.sendTweet(tweetMessage);
     });
   }
 

@@ -14,8 +14,22 @@ export class TwitchController {
   constructor(@Inject('LISTENER') private twitchService: TwitchService) {}
 
   @Post('subscribeToOnlineStream')
-  async subscribeToOnlineStream(@Body() body: { id: string }) {
-    return this.twitchService.subscribeToOnlineStream(body.id);
+  async subscribeToOnlineStream(
+    @Body()
+    body: {
+      id: string;
+      embedDiscordMessage: string;
+      discordMessage: string;
+      tweetMessage: string;
+    },
+  ) {
+    const { id, embedDiscordMessage, discordMessage, tweetMessage } = body;
+    return this.twitchService.subscribeToOnlineStream(
+      id,
+      embedDiscordMessage,
+      discordMessage,
+      tweetMessage,
+    );
   }
 
   @Delete('subscriptions/:id')

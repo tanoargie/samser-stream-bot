@@ -79,7 +79,15 @@ describe('TwitchService', () => {
   describe('when subscribing to online stream', () => {
     it('calls subscribeToOnlineStream correctly and triggers discord and twitter functions', async () => {
       const userId = 'user_id';
-      await service.subscribeToOnlineStream(userId);
+      const embedDiscordMessage = 'embed_message';
+      const discordMessage = 'discord_message';
+      const tweetMessage = 'tweet_message';
+      await service.subscribeToOnlineStream(
+        userId,
+        embedDiscordMessage,
+        discordMessage,
+        tweetMessage,
+      );
       expect(mockSubscribeToOnlineStream).toHaveBeenNthCalledWith(
         1,
         userId,
