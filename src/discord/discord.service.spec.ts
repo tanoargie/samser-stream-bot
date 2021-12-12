@@ -34,7 +34,7 @@ describe('DiscordService', () => {
 
       expect(mockSend).toHaveBeenCalledWith({
         content,
-        username: 'tano#5049',
+        username: process.env.DISCORD_BOT_USERNAME,
         avatarURL: process.env.DISCORD_BOT_IMAGE,
         embeds,
       });

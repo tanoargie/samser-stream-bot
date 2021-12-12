@@ -8,7 +8,7 @@ export class DiscordService {
   async sendWebhookMessage(message: string, embeds: Array<MessageEmbed>) {
     return this.webhookClient.send({
       content: message,
-      username: 'tano#5049',
+      username: process.env.DISCORD_BOT_USERNAME,
       avatarURL: process.env.DISCORD_BOT_IMAGE,
       embeds,
     });
