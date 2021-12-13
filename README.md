@@ -1,6 +1,6 @@
 # Tano stream bot
 
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
+[![codecov](https://codecov.io/gh/francoserio/tano-stream-bot/branch/master/graph/badge.svg?token=REIY2HKE2C)](https://codecov.io/gh/francoserio/tano-stream-bot)
 <a href="https://discord.gg/KEVmvXDP" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
 
 ## Description
