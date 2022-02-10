@@ -36,6 +36,7 @@ describe('TwitchService', () => {
   const mockStatusesUpdate = jest.fn();
   const mockSendWebhookMessage = jest.fn();
   const mockSendTweet = jest.fn();
+  const mockChangeProfileName = jest.fn();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -50,6 +51,7 @@ describe('TwitchService', () => {
           provide: TwitterService,
           useValue: {
             sendTweet: mockSendTweet,
+            changeProfileName: mockChangeProfileName,
           },
         },
         {
@@ -82,11 +84,14 @@ describe('TwitchService', () => {
       const embedDiscordMessage = 'embed_message';
       const discordMessage = 'discord_message';
       const tweetMessage = 'tweet_message';
+      const twitterProfileName = 'twitter_profile_name';
+
       await service.subscribeToOnlineStream(
         userId,
         embedDiscordMessage,
         discordMessage,
         tweetMessage,
+        twitterProfileName,
       );
       expect(mockSubscribeToOnlineStream).toHaveBeenNthCalledWith(
         1,
@@ -95,6 +100,7 @@ describe('TwitchService', () => {
       );
       expect(mockSendWebhookMessage).toHaveBeenCalled();
       expect(mockSendTweet).toHaveBeenCalled();
+      expect(mockChangeProfileName).toHaveBeenCalled();
     });
   });
 

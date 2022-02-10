@@ -30,11 +30,13 @@ export class TwitchService {
     embedDiscordMessage: string,
     discordMessage: string,
     tweetMessage: string,
+    twitterProfileName: string,
   ) {
     return this.listener.subscribeToStreamOnlineEvents(userId, async () => {
       const embed = new MessageEmbed().setTitle(embedDiscordMessage);
       await this.discordService.sendWebhookMessage(discordMessage, [embed]);
       await this.twitterService.sendTweet(tweetMessage);
+      await this.twitterService.changeProfileName(twitterProfileName);
     });
   }
 

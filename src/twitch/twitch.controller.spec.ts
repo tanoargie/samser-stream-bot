@@ -40,18 +40,21 @@ describe('TwitchController', () => {
       const embedDiscordMessage = 'embed_message';
       const discordMessage = 'discord_message';
       const tweetMessage = 'twitter_message';
+      const twitterProfileName = 'twitter_profile_name';
 
       await controller.subscribeToOnlineStream({
         id,
         embedDiscordMessage,
         discordMessage,
         tweetMessage,
+        twitterProfileName,
       });
       expect(mockSubscribeToOnlineStream).toHaveBeenCalledWith(
         id,
         embedDiscordMessage,
         discordMessage,
         tweetMessage,
+        twitterProfileName,
       );
     });
   });

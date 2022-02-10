@@ -4,6 +4,7 @@ import { TwitterService } from './twitter.service';
 describe('TwitterService', () => {
   let service: TwitterService;
   const mockStatusUpdate = jest.fn();
+  const mockAccountUpdateProfile = jest.fn();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -14,6 +15,9 @@ describe('TwitterService', () => {
           useValue: {
             tweets: {
               statusesUpdate: mockStatusUpdate,
+            },
+            accountsAndUsers: {
+              accountUpdateProfile: mockAccountUpdateProfile,
             },
           },
         },
@@ -32,6 +36,14 @@ describe('TwitterService', () => {
       const status = 'Test tweet!';
       await service.sendTweet(status);
       expect(mockStatusUpdate).toHaveBeenCalledWith({ status });
+    });
+  });
+
+  describe('changeProfileName', () => {
+    it('sends the correct payload', async () => {
+      const newName = 'Faustino Doro';
+      await service.changeProfileName(newName);
+      expect(mockAccountUpdateProfile).toHaveBeenCalledWith({ name: newName });
     });
   });
 });

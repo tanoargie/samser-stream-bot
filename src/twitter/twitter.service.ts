@@ -8,4 +8,10 @@ export class TwitterService {
   async sendTweet(tweet: string) {
     return this.twitterClient.tweets.statusesUpdate({ status: tweet });
   }
+
+  async changeProfileName(newName: string) {
+    return this.twitterClient.accountsAndUsers.accountUpdateProfile({
+      name: newName,
+    });
+  }
 }
