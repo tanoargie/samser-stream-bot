@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { DiscordModule } from 'src/discord/discord.module';
-import { TwitterModule } from 'src/twitter/twitter.module';
+import { DiscordModule } from '../discord/discord.module';
+import { TwitterModule } from '../twitter/twitter.module';
 import { TwitchController } from './twitch.controller';
 import TwitchFactory from './twitch.factory';
 
