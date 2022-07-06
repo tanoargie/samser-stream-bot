@@ -1,0 +1,7 @@
+services:
+  app:
+    build: .
+    ports:
+      - ${SENDER_PORT}:${SENDER_PORT}
+      - ${LISTENER_PORT}:${LISTENER_PORT}
+    env_file: .env
