@@ -1,5 +1,6 @@
 services:
   app:
+    container_name: stream-bot
     build: .
     ports:
       - ${SENDER_PORT}:${SENDER_PORT}
