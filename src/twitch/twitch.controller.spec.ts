@@ -37,23 +37,23 @@ describe('TwitchController', () => {
   describe('when subscribing to online stream', () => {
     it('calls service with correct body id', async () => {
       const id = 'test_id';
-      const embedDiscordMessage = 'embed_message';
-      const discordMessage = 'discord_message';
-      const tweetMessage = 'twitter_message';
+      const discordMessage = {
+        message: 'discord_message',
+        embed: 'embed_message',
+      };
+      const twitterMessage = 'twitter_message';
       const twitterProfileName = 'twitter_profile_name';
 
       await controller.subscribeToOnlineStream({
         id,
-        embedDiscordMessage,
         discordMessage,
-        tweetMessage,
+        twitterMessage,
         twitterProfileName,
       });
       expect(mockSubscribeToOnlineStream).toHaveBeenCalledWith(
         id,
-        embedDiscordMessage,
         discordMessage,
-        tweetMessage,
+        twitterMessage,
         twitterProfileName,
       );
     });

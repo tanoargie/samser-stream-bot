@@ -27,16 +27,24 @@ export class TwitchService {
 
   async subscribeToOnlineStream(
     userId: string,
-    embedDiscordMessage: string,
-    discordMessage: string,
-    tweetMessage: string,
-    twitterProfileName: string,
+    discordMessage?: {
+      embed: string;
+      message: string;
+    },
+    twitterMessage?: string,
+    twitterProfileName?: string,
   ) {
     return this.listener.subscribeToStreamOnlineEvents(userId, async () => {
-      const embed = new MessageEmbed().setTitle(embedDiscordMessage);
-      await this.discordService.sendWebhookMessage(discordMessage, [embed]);
-      await this.twitterService.sendTweet(tweetMessage);
-      await this.twitterService.changeProfileName(twitterProfileName);
+      if (discordMessage) {
+        const { embed, message } = discordMessage;
+        await this.discordService.sendWebhookMessage(message, [
+          new MessageEmbed().setTitle(embed),
+        ]);
+      }
+      if (twitterMessage) await this.twitterService.sendTweet(twitterMessage);
+      if (twitterProfileName) {
+        await this.twitterService.changeProfileName(twitterProfileName);
+      }
     });
   }
 

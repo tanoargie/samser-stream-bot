@@ -18,25 +18,20 @@ export class TwitchController {
     @Body()
     body: {
       id: string;
-      embedDiscordMessage?: string;
-      discordMessage?: string;
-      tweetMessage?: string;
+      discordMessage: {
+        embed: string;
+        message: string;
+      };
+      twitterMessage?: string;
       twitterProfileName?: string;
     },
   ) {
-    const {
-      id,
-      embedDiscordMessage,
-      discordMessage,
-      tweetMessage,
-      twitterProfileName,
-    } = body;
+    const { id, discordMessage, twitterMessage, twitterProfileName } = body;
 
     return this.twitchService.subscribeToOnlineStream(
       id,
-      embedDiscordMessage,
       discordMessage,
-      tweetMessage,
+      twitterMessage,
       twitterProfileName,
     );
   }
