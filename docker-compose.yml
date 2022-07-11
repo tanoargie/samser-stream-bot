@@ -1,6 +1,6 @@
 services:
-  app:
-    container_name: stream-bot
+  app-stream:
+    container_name: app-stream
     build: .
     ports:
       - ${SENDER_PORT}:${SENDER_PORT}
