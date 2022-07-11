@@ -18,7 +18,7 @@ export class TwitchController {
     @Body()
     body: {
       id: string;
-      discordMessage: {
+      discordMessage?: {
         embed: string;
         message: string;
       };
